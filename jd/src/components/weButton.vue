@@ -1,5 +1,8 @@
 <template>
-    <a href="javascript:;" class="weui-btn" :class=[typeStyle,disabledStyle] ><slot></slot></a>
+    <a href="javascript:;" class="weui-btn" :class=[typeStyle,disabledStyle,loadStyle] >
+        <i class="weui-loading" v-show="loading"></i>
+        <slot></slot>
+    </a>
 </template>
 <style lang="less">
 </style>
@@ -13,10 +16,14 @@ export default {
         disabled:{
             type:Boolean,
             default:false
+        },
+        loading:{
+            type:Boolean,
+            default:false
         }
     },
     computed:{
-        typeStyle(){
+        typeStyle:function(){
             let s = ""
             switch(this.type){
                 case 'primary' :
@@ -30,12 +37,16 @@ export default {
             }
             return s;
         },
-        disabledStyle(){
-            let ret = ""
-            if(this.disabled==true){
-                ret = "weui-btn_disabled"
-            }
-            return ret;
+        disabledStyle:function(){
+            return this.disabled?"weui-btn_disabled":""
+            // let ret = ""
+            // if(this.disabled==true){
+            //     ret = "weui-btn_disabled"
+            // }
+            // return ret;
+        },
+        loadStyle:function(){
+            return this.loading?"weui-btn_loading":""
         }
     }
 }
