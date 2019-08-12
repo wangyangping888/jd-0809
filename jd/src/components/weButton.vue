@@ -1,5 +1,5 @@
 <template>
-    <a href="javascript:;" class="weui-btn" :class=[typeStyle,disabledStyle,loadStyle] >
+    <a href="javascript:;" class="weui-btn" :class=[typeStyle,disabledStyle,loadStyle] @click="$emit('click')">
         <i class="weui-loading" v-show="loading"></i>
         <slot></slot>
     </a>
@@ -20,30 +20,27 @@ export default {
         loading:{
             type:Boolean,
             default:false
+        },
+        border:{
+            type:String,
+            default:""
         }
     },
     computed:{
         typeStyle:function(){
-            let s = ""
+            let ret = ""
             switch(this.type){
                 case 'primary' :
-                s = "weui-btn_primary";break;
+                ret = this.border=="true"?"weui-btn_plain-primary":"weui-btn_primary";break;
                 case 'warning' :
-                s = "weui-btn_warn";break;
+                ret = this.border=="true"?"weui-btn_warn":"weui-btn_warn";break;
                 case 'default' :
-                s = "weui-btn_default";break;
-                default:
-                s = "weui-btn_default";break;
+                ret = this.border=="true"?"weui-btn_plain-default":"weui-btn_default";break;
             }
-            return s;
+            return ret;
         },
         disabledStyle:function(){
             return this.disabled?"weui-btn_disabled":""
-            // let ret = ""
-            // if(this.disabled==true){
-            //     ret = "weui-btn_disabled"
-            // }
-            // return ret;
         },
         loadStyle:function(){
             return this.loading?"weui-btn_loading":""
